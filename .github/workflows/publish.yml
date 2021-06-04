@@ -1,0 +1,22 @@
+name: Publish
+on: push
+
+jobs:
+  publish:
+    name: Publishing Application
+    runs-on: ubuntu-latest
+    steps:
+      - uses: docker://node:14-alpine
+      - uses: actions/checkout@v2
+
+      - name: Installing Modules
+        run: npm ci
+
+      - name: Building the Application
+        run: npm run build
+
+      - name: Deploying Application to Github Pages
+        uses: JamesIves/github-pages-deploy-action@4.1.1
+        with:
+          branch: demo
+          folder: ./build
